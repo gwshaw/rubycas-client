@@ -3,6 +3,8 @@ module CASClient
     module Rack
 
       class Response
+        attr_reader :user, :extra_attributes, :errors
+
         def initialize(user = nil, extra_attributes = nil, *errors)
           @user, @extra_attributes, @errors = user, extra_attributes, errors
         end
@@ -54,7 +56,7 @@ module CASClient
 
           def configure(config)
             @@config = config
-            @@config[:logger] = ::App.logger unless @@config[:logger]
+            @@config[:logger] = ::Rails.logger unless @@config[:logger]
             @@client = CASClient::Client.new(config)
             @@log = client.log
           end
